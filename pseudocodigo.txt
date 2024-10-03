@@ -1,76 +1,83 @@
-Proceso SepararVocalesConsonantes
-    Definir vocales Como Caracter
-    Definir mensaje Como Cadena
-    Definir letras_array, resultado, consonantes_temporales Como Caracter
-    Definir i Como Entero
+Proceso desencriptar_mensaje
 
-    // Definir las vocales
-    vocales[1] = 'a'
-    vocales[2] = 'e'
-    vocales[3] = 'i'
-    vocales[4] = 'o'
-    vocales[5] = 'u'
-
-    // Pedir el mensaje al usuario
-    Escribir "Ingresa un mensaje: "
+    // Definir variables
+    Definir cadena, mensaje Como Cadena
     Leer mensaje
+    Definir longitud_cadena, inicio, fin, i Como Entero
+    Definir resultado Como Vector de Caracter
+    Definir letras_array Como Vector de Caracter
+    Definir consonantes Como Cadena
+    Definir vocales Como Vector de Caracter
 
-    // Convertir el mensaje en un array de letras
-    letras_array = convertirACaracteres(mensaje)
+    // Verificar si el mensaje fue enviado
+    Si ExisteParametro mensaje Entonces
+        Leer cadena // Leer el mensaje encriptado
+        longitud_cadena = Longitud(cadena)   // Obtener longitud del mensaje
 
-    // Inicializar arreglos
-    resultado = ""
-    consonantes_temporales = ""
+        // Inicializar arreglo vacío para el resultado
+        Definir resultado[longitud_cadena]
 
-    // Recorrer el array de letras
-    Para i = 1 Hasta Longitud(letras_array) Con Paso 1 Hacer
-        letra = Subcadena(letras_array, i, i)
+        // Inicializar punteros para los extremos del arreglo
+        inicio = 0
+        fin = longitud_cadena - 1
+        i = 0 // Índice para recorrer el mensaje encriptado
 
-        // Si la letra es una vocal
-        Si EsVocal(letra, vocales) Entonces
-            // Si hay más de una consonante acumulada, invertir el orden
-            Si Longitud(consonantes_temporales) > 1 Entonces
-                Para j = Longitud(consonantes_temporales) Hasta 1 Con Paso -1 Hacer
-                    resultado = resultado + Subcadena(consonantes_temporales, j, j)
-                FinPara
-            SiNo
-                resultado = resultado + consonantes_temporales
+        // Colocar caracteres alternando entre el inicio y el final
+        Mientras inicio <= fin Hacer
+            Si inicio <= fin Entonces
+                resultado[inicio] = Subcadena(cadena, i + 1, 1) // Colocar caracter en la posición de inicio
+                inicio = inicio + 1
+                i = i + 1
             FinSi
 
-            // Agregar la vocal al resultado
-            resultado = resultado + letra
+            Si inicio <= fin Entonces
+                resultado[fin] = Subcadena(cadena, i + 1, 1) // Colocar caracter en la posición de fin
+                fin = fin - 1
+                i = i + 1
+            FinSi
+        FinMientras
 
-            // Limpiar las consonantes temporales
-            consonantes_temporales = ""
-        SiNo
-            // Si no es vocal, acumular consonantes
-            consonantes_temporales = consonantes_temporales + letra
-        FinSi
-    FinPara
+        // Unir el resultado en una cadena desencriptada
+        cadena_desencriptada = Concatenar(resultado)
 
-    // Añadir consonantes restantes al final
-    Si Longitud(consonantes_temporales) > 1 Entonces
-        Para i = Longitud(consonantes_temporales) Hasta 1 Con Paso -1 Hacer
-            resultado = resultado + Subcadena(consonantes_temporales, i, i)
+        // Segunda parte del código: procesamiento de vocales y consonantes
+
+        vocales = {"a", "e", "i", "o", "u"}
+        mensaje = cadena_desencriptada
+        letras_array = ConvertirEnArray(mensaje)
+        resultado = []
+        consonantes = ""
+
+        // Recorrer cada letra del mensaje
+        Para Cada letra En letras_array Hacer
+            Si letra EstáEn(vocales) Entonces
+                // Invertir las consonantes acumuladas si hay más de una
+                Si Longitud(consonantes) > 1 Entonces
+                    resultado = resultado + Invertir(consonantes)
+                Sino
+                    resultado = resultado + consonantes
+                FinSi
+
+                // Añadir la vocal al resultado
+                resultado = resultado + letra
+
+                // Limpiar las consonantes acumuladas
+                consonantes = ""
+            Sino
+                // Acumular consonantes
+                consonantes = concatenar(consonantes, letra)
+            FinSi
         FinPara
-    SiNo
-        resultado = resultado + consonantes_temporales
+
+        // Añadir las consonantes restantes al final
+        Si Longitud(consonantes) > 1 Entonces
+            resultado = resultado + Invertir(consonantes)
+        Sino
+            resultado = resultado + consonantes
+        FinSi
+
+        // Mostrar el mensaje desencriptado
+        Escribir Concatenar(resultado)
     FinSi
 
-    // Mostrar el resultado
-    Escribir "Resultado: ", resultado
 FinProceso
-
-Funcion EsVocal(letra, vocales) Como Logico
-    Para i = 1 Hasta 5 Hacer
-        Si letra = vocales[i] Entonces
-            Retornar Verdadero
-        FinSi
-    FinPara
-    Retornar Falso
-FinFuncion
-
-Funcion convertirACaracteres(cadena) Como Caracter
-    // Simplemente retorna la cadena como un arreglo de caracteres
-    Retornar cadena
-FinFuncion

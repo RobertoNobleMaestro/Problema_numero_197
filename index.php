@@ -2,14 +2,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
-    <title>Document</title>
+    <title>Problema 197</title>
 </head>
 <body>
+    <h1>PROBLEMA 197</h1>
     <form action="" method="GET" class="highlighted-text">
         <label for="mensaje">Escribe el mensaje que quieres desencriptar: </label><br><br>
         <input type="text" id="mensaje" name="mensaje"><br><br>
         <button type="submit">Desencriptar</button><br>
         <?php 
+        //_____________________________________________________________________________________________________//
+        //_____________________________________________________________________________________________________//
+        //___________________________________PRIMERA PARTE DEL CODIGO__________________________________________//
+        //_____________________________________________________________________________________________________//
+        //_____________________________________________________________________________________________________//
             if (isset($_GET['mensaje'])) {
                 $cadena = $_GET['mensaje']; // Cadena encriptada
                 $longitudcadena = strlen($cadena);
@@ -17,8 +23,6 @@
                 $inicio = 0;
                 $fin = $longitudcadena - 1;
                 $i = 0; // Índice para recorrer la cadena encriptada
-
-               
                 // Colocar los caracteres alternando entre el principio y el final
                 while ($inicio <= $fin) {
                     // Colocar en la posición del inicio
@@ -27,7 +31,6 @@
                         $inicio++;
                         $i++;   
                     }
-
                     // Colocar en la posición del fin
                     if ($inicio <= $fin) {
                         $resultado[$fin] = $cadena[$i];
@@ -35,14 +38,13 @@
                         $i++;
                     }
                 }
-
                 // Unir el array de caracteres en una cadena
                 $cadena_desencriptada = implode("", $resultado);
-//_____________________________________________________________________________________________________//
-//_____________________________________________________________________________________________________//
-//_____________________________________________________________________________________________________//
-//_____________________________________________________________________________________________________//
-//_____________________________________________________________________________________________________//
+        //_____________________________________________________________________________________________________//
+        //_____________________________________________________________________________________________________//
+        //___________________________________SEGUNDA PARTE DEL CODIGO__________________________________________//
+        //_____________________________________________________________________________________________________//
+        //_____________________________________________________________________________________________________//
 
                 $vocales = array('a', 'e', 'i', 'o', 'u');
                 $mensaje = $cadena_desencriptada;    
@@ -73,7 +75,8 @@
                     $resultado[] = $consonantes;
                 }
                 // Imprimir el resultado
-                echo implode('', $resultado);
+
+                echo "<br>" . implode('', $resultado);
             }
         ?>
     </form>
