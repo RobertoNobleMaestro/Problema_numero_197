@@ -1,0 +1,76 @@
+Proceso SepararVocalesConsonantes
+    Definir vocales Como Caracter
+    Definir mensaje Como Cadena
+    Definir letras_array, resultado, consonantes_temporales Como Caracter
+    Definir i Como Entero
+
+    // Definir las vocales
+    vocales[1] = 'a'
+    vocales[2] = 'e'
+    vocales[3] = 'i'
+    vocales[4] = 'o'
+    vocales[5] = 'u'
+
+    // Pedir el mensaje al usuario
+    Escribir "Ingresa un mensaje: "
+    Leer mensaje
+
+    // Convertir el mensaje en un array de letras
+    letras_array = convertirACaracteres(mensaje)
+
+    // Inicializar arreglos
+    resultado = ""
+    consonantes_temporales = ""
+
+    // Recorrer el array de letras
+    Para i = 1 Hasta Longitud(letras_array) Con Paso 1 Hacer
+        letra = Subcadena(letras_array, i, i)
+
+        // Si la letra es una vocal
+        Si EsVocal(letra, vocales) Entonces
+            // Si hay más de una consonante acumulada, invertir el orden
+            Si Longitud(consonantes_temporales) > 1 Entonces
+                Para j = Longitud(consonantes_temporales) Hasta 1 Con Paso -1 Hacer
+                    resultado = resultado + Subcadena(consonantes_temporales, j, j)
+                FinPara
+            SiNo
+                resultado = resultado + consonantes_temporales
+            FinSi
+
+            // Agregar la vocal al resultado
+            resultado = resultado + letra
+
+            // Limpiar las consonantes temporales
+            consonantes_temporales = ""
+        SiNo
+            // Si no es vocal, acumular consonantes
+            consonantes_temporales = consonantes_temporales + letra
+        FinSi
+    FinPara
+
+    // Añadir consonantes restantes al final
+    Si Longitud(consonantes_temporales) > 1 Entonces
+        Para i = Longitud(consonantes_temporales) Hasta 1 Con Paso -1 Hacer
+            resultado = resultado + Subcadena(consonantes_temporales, i, i)
+        FinPara
+    SiNo
+        resultado = resultado + consonantes_temporales
+    FinSi
+
+    // Mostrar el resultado
+    Escribir "Resultado: ", resultado
+FinProceso
+
+Funcion EsVocal(letra, vocales) Como Logico
+    Para i = 1 Hasta 5 Hacer
+        Si letra = vocales[i] Entonces
+            Retornar Verdadero
+        FinSi
+    FinPara
+    Retornar Falso
+FinFuncion
+
+Funcion convertirACaracteres(cadena) Como Caracter
+    // Simplemente retorna la cadena como un arreglo de caracteres
+    Retornar cadena
+FinFuncion
