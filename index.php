@@ -8,41 +8,73 @@
     <form action="" method="GET" class="highlighted-text">
         <label for="mensaje">Escribe el mensaje que quieres desencriptar: </label><br><br>
         <input type="text" id="mensaje" name="mensaje"><br><br>
-        
-        <button type="submit">Desencriptar</button>
-    </form>
-    <?php 
-    if (isset($_GET['mensaje'])) {
-        $vocales = array('a', 'e', 'i', 'o', 'u');
-        $mensaje = $_GET['mensaje'];    
-        $letras_array = str_split($mensaje);
-        $resultado = [];
-        $consonantes = '';
-        foreach ($letras_array as $letra) {
-            if (in_array(strtolower($letra), $vocales)) {
-                // Invertir consonantes acumuladas si son más de una
+        <button type="submit">Desencriptar</button><br>
+        <?php 
+            if (isset($_GET['mensaje'])) {
+                $cadena = $_GET['mensaje']; // Cadena encriptada
+                $longitudcadena = strlen($cadena);
+                $resultado = array_fill(0, $longitudcadena, ""); // Creamos un array vacío para colocar caracteres
+                $inicio = 0;
+                $fin = $longitudcadena - 1;
+                $i = 0; // Índice para recorrer la cadena encriptada
+
+               
+                // Colocar los caracteres alternando entre el principio y el final
+                while ($inicio <= $fin) {
+                    // Colocar en la posición del inicio
+                    if ($inicio <= $fin) {
+                        $resultado[$inicio] = $cadena[$i];
+                        $inicio++;
+                        $i++;   
+                    }
+
+                    // Colocar en la posición del fin
+                    if ($inicio <= $fin) {
+                        $resultado[$fin] = $cadena[$i];
+                        $fin--;
+                        $i++;
+                    }
+                }
+
+                // Unir el array de caracteres en una cadena
+                $cadena_desencriptada = implode("", $resultado);
+//_____________________________________________________________________________________________________//
+//_____________________________________________________________________________________________________//
+//_____________________________________________________________________________________________________//
+//_____________________________________________________________________________________________________//
+//_____________________________________________________________________________________________________//
+
+                $vocales = array('a', 'e', 'i', 'o', 'u');
+                $mensaje = $cadena_desencriptada;    
+                $letras_array = str_split($mensaje);
+                $resultado = [];
+                $consonantes = '';
+                foreach ($letras_array as $letra) {
+                    if (in_array(strtolower($letra), $vocales)) {
+                        // Invertir consonantes acumuladas si son más de una
+                        if (strlen($consonantes) > 1) {
+                            $resultado[] = strrev($consonantes);
+                        } else {
+                            $resultado[] = $consonantes;
+                        }
+                        // Añadir la letra al resultado
+                        $resultado[] = $letra;
+                        // Limpiar consonantes 
+                        $consonantes = '';
+                    } else {
+                        // Acumular consonantes
+                        $consonantes .= $letra;
+                    }
+                }
+                // Añadir consonantes restantes al final
                 if (strlen($consonantes) > 1) {
                     $resultado[] = strrev($consonantes);
                 } else {
                     $resultado[] = $consonantes;
                 }
-                // Añadir la letra al resultado
-                $resultado[] = $letra;
-                // Limpiar consonantes 
-                $consonantes = '';
-            } else {
-                // Acumular consonantes
-                $consonantes .= $letra;
+                // Imprimir el resultado
+                echo implode('', $resultado);
             }
-        }
-        // Añadir consonantes restantes al final
-        if (strlen($consonantes) > 1) {
-            $resultado[] = strrev($consonantes);
-        } else {
-            $resultado[] = $consonantes;
-        }
-        // Imprimir el resultado
-        echo implode('', $resultado);
-    }
-    ?>
+        ?>
+    </form>
 </body>
