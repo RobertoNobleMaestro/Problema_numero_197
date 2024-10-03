@@ -1,14 +1,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
     <title>Document</title>
 </head>
 <body>
     <form action="" method="GET" class="highlighted-text">
-        <label for="mensaje">Escribe el mensaje que quieres desencriptar: </label>
-        <input type="text" id="mensaje" name="mensaje">
-        <link rel="stylesheet" href="./css/style.css">
-        <button type="submit">Enviar</button>
+        <label for="mensaje">Escribe el mensaje que quieres desencriptar: </label><br><br>
+        <input type="text" id="mensaje" name="mensaje"><br><br>
+        
+        <button type="submit">Desencriptar</button>
     </form>
     <?php 
     if (isset($_GET['mensaje'])) {
