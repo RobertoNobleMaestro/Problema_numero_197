@@ -4,16 +4,12 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="" method="GET">
+    <form action="" method="GET" class="highlighted-text">
         <label for="mensaje">Escribe el mensaje que quieres desencriptar: </label>
         <input type="text" id="mensaje" name="mensaje">
         <link rel="stylesheet" href="./css/style.css">
         <button type="submit">Enviar</button>
     </form>
-    <script>
-        
-
-    </script>
     <?php 
     if (isset($_GET['mensaje'])) {
         $vocales = array('a', 'e', 'i', 'o', 'u');
